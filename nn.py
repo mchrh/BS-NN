@@ -6,14 +6,18 @@ import pandas as pd
 
 # loading the data
 df=pd.read_csv("data/options.csv")
+df.head()
+
 
 
 ## Normalize the data exploiting the fact that the BS Model is linear homogenous in S,K
-df["Stock Price"] = df["Stock Price"]/df["Strike Price"]
-df["Call Price"] = df["Call Price"]/df["Strike Price"]
+#df["Stock Price"] = df["Stock Price"]/df["Strike Price"]
+#df["Call Price"] = df["Call Price"]/df["Strike Price"]
 
 # splitting data into training and test set
-n=30000
+
+
+"""n=30000
 
 n_train=int(0.8*n)
 train=df[0:n_train]
@@ -77,4 +81,4 @@ y_train_hat=model.predict(X_train)
 
 # reducing dimensionality to match y_train dimensionality
 y_train_hat=squeeze(y_train_hat)
-check_acc(y_train, y_train_hat)
+check_acc(y_train, y_train_hat)"""
