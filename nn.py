@@ -2,6 +2,10 @@ from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, LeakyReLU
 from keras import backend
 import numpy as np
+import pandas as pd
+
+# loading the data
+df=pd.read_csv("data/options.csv")
 
 
 ## Normalize the data exploiting the fact that the BS Model is linear homogenous in S,K
