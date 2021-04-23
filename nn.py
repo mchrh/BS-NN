@@ -1,6 +1,7 @@
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, LeakyReLU
 from keras import backend
+import numpy as np
 
 
 ## Normalize the data exploiting the fact that the BS Model is linear homogenous in S,K
@@ -28,6 +29,7 @@ nodes=120
 model=Sequential()
 
 model.add(Dense(nodes, input_dim=X_train.shape[1]))
+
 model.add(LeakyReLU())
 model.add(Dropout(0.25))
 
@@ -47,3 +49,28 @@ model.compile(loss='mse', optimizer='rmsprop') # using mean squared error as los
 
 # fitting the model to calibrate using the loss fct, we use 10 epochs
 model.fit(X_train, y_train, batch_size=64, epochs=10, validation_split=0.1, verbose=2)
+
+# function to check the accuracy of the model
+def check_acc(y,y_hat):
+    stats=dict()
+    stats['diff']=y - y_hat
+
+    # Mean Squared Error
+    stats['mse']=mean(stats['diff']**2)
+    print("MSE:", stats['mse'])
+    # Root Mean Squared Error
+    stats['squareMSE']=np.sqrt(stats['mse'])
+    print("Squred MSE:", stats['squareMSE'])
+    # Mean Absolute Error
+    stats['mae']=np.mean(np.abs(stats['diff']))
+    print("MAE:", stats['mae'])
+    # Mean Percent Error
+    stats['mpe']=np.sqrt(stats['mse']/np.mean(y))
+    print("MPE:", stats['mpe'])
+
+
+y_train_hat=model.predict(X_train)
+
+# reducing dimensionality to match y_train dimensionality
+y_train_hat=squeeze(y_train_hat)
+check_acc(y_train, y_train_hat)
