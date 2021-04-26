@@ -15,9 +15,7 @@ df.head()
 #df["Call Price"] = df["Call Price"]/df["Strike Price"]
 
 # splitting data into training and test set
-
-
-"""n=30000
+n=30000
 
 n_train=int(0.8*n)
 train=df[0:n_train]
@@ -28,7 +26,7 @@ test = df[n_train+1:n]
 X_test = test[['Stock Price', 'Maturity', 'Dividends', 'Volatility', 'Risk-free']].values
 y_test = test['Call Price'].values
 
-# defining activation function
+# defining the activation function
 def custom_activation(x):
     return backend.exp(x)
 
@@ -81,4 +79,4 @@ y_train_hat=model.predict(X_train)
 
 # reducing dimensionality to match y_train dimensionality
 y_train_hat=squeeze(y_train_hat)
-check_acc(y_train, y_train_hat)"""
+check_acc(y_train, y_train_hat)
