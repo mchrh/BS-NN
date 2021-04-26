@@ -3,15 +3,12 @@ import urllib
 import pandas as pd
 import json
 import simplejson
+import PyTradier
 
-response = requests.get('https://sandbox.tradier.com/v1/markets/options/chains',
-    params={'symbol': 'APPL', 'expiration': '2019-03-30', 'greeks': 'false'},
-    headers={'Authorization': 'Bearer <DOoic2w9mNAX0GUA9hL4vuMRqHzd>', 'Accept': 'application/json'}
-).json()
+import yfinance as yf 
 
-"""if 'json' in response.headers.get('Content-Type'):
-    js = response.json()
-else:
-    print('Response content is not in JSON format.')
-    js = 'spam'
-"""
+urls=['VOO', 'MSFT', 'AAPL', 'GOOG']
+
+for url in urls:
+    tickerTag = yf.Ticker(url)
+    tickerTag.actions.to_csv("tickertag{}.csv".format(url))
