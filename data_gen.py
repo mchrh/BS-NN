@@ -47,4 +47,4 @@ def data_gen_to_csv(N):
     df['K']=strike
     df['Call']=call
 
-    df.to_csv('x.csv')
+    df.to_csv('data/x.csv') # exporting the data as a csv 
