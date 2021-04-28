@@ -1,6 +1,7 @@
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, LeakyReLU
 from keras import backend
+import keras
 import numpy as np
 import pandas as pd
 
@@ -75,7 +76,10 @@ def check_acc(y,y_hat):
     print("MPE:", stats['mpe'])
 
 
-y_train_hat=model.predict(X_train)
+# using Adam optimizer (like the original paper)
+opt=keras.optimizers.Adam(learning_rate=0.01) # fix learning rate later 
+
+y_train_hat=model.predict(X_train, optimizer=opt)
 
 # reducing dimensionality to match y_train dimensionality
 y_train_hat=squeeze(y_train_hat)

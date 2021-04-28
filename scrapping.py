@@ -8,15 +8,14 @@ import scrapy
 from scrapy.exceptions import DropItem
 from scrapy.loader import ItemLoader
 from scrapy.http import Request
-
-from scraper import utils
-from scraper.items import DataItem
+import scraper
+from scraper import utils   
 
 
 class CBOESpider(scrapy.Spider):
     name = 'cboe'
     allowed_domains = ['cboe.com']
-    spider_path = utils.create_spider_path(name)
+    spider_path = scraper.utils.create_spider_path(name)
     api_endpoint = 'https://cdn.cboe.com/api/global/delayed_quotes/options/'
 
     custom_settings = {
@@ -44,7 +43,7 @@ class CBOESpider(scrapy.Spider):
 
     def start_requests(self):
         for symbol in self.symbols:
-            loader = ItemLoader(item=DataItem())
+            loader = ItemLoader(item=scraper.DataItem())
             loader.add_value('symbol', symbol)
             loader.add_value('symbol_path', symbol + '_daily')
             loader.add_value('start_date', datetime.now().isoformat())
