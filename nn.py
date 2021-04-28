@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 
 # loading the data
-df=pd.read_csv("data/options.csv")
+df=pd.read_csv("data/x.csv")
 df.head()
 
 
@@ -20,12 +20,12 @@ n=30000
 
 n_train=int(0.8*n)
 train=df[0:n_train]
-X_train = train[['Stock Price', 'Maturity', 'Dividends', 'Volatility', 'Risk-free']].values
-y_train = train['Call Price'].values
+X_train = train[['Vol', 'T', 'K']].values
+y_train = train['Call'].values
 
 test = df[n_train+1:n]
-X_test = test[['Stock Price', 'Maturity', 'Dividends', 'Volatility', 'Risk-free']].values
-y_test = test['Call Price'].values
+X_test = test[['Vol', 'T', 'K']].values
+y_test = test['Call'].values
 
 # defining the activation function
 def custom_activation(x):
@@ -77,7 +77,7 @@ def check_acc(y,y_hat):
 
 
 # using Adam optimizer (like the original paper)
-opt=keras.optimizers.Adam(learning_rate=0.01) # fix learning rate later 
+opt=keras.optimizers.Adam(learning_rate=0.01) # fix learning rate later
 
 y_train_hat=model.predict(X_train, optimizer=opt)
 
