@@ -19,24 +19,32 @@ def bs(S,K,T,r,sigma,option):
   return result
 
 
-# generating random values for volatility, strike, maturity
-r=0.
-S=1.
-sigma_lower=0.1
-sigma_upper=1.
-T_lower=0.03
-T_upper=1.
-K_lower=0.6
-K_upper=1.2
 
-sigma=np.random.uniform(sigma_lower,sigma_upper, 100000)
-maturity=np.random.uniform(T_lower,T_upper,100000)
-strike=np.random.uniform(T_lower, T_upper, 100000)
+def data_gen_to_csv(N):
+    # generating random values for volatility, strike, maturity
+    r=0.
+    S=1.
+    sigma_lower=0.1
+    sigma_upper=1.
+    T_lower=0.03
+    T_upper=1.
+    K_lower=0.6
+    K_upper=1.2
 
-# creating dataframes with the generated data
-df=pd.DataFrame()
-df['Vol']=sigma
-df['T']=maturity
-df['K']=strike
+    sigma=np.random.uniform(sigma_lower,sigma_upper, N)
+    maturity=np.random.uniform(T_lower,T_upper,N)
+    strike=np.random.uniform(T_lower, T_upper, N)
 
-df.to_csv('x.csv')
+    # computing call prices
+    call=[]
+    for i in range(0,N):
+        call.append(bs(S,strike[i], maturity[i], r, sigma[i], option='call'))
+
+    # creating dataframes with the columns : volatility, maturity, strike, call price
+    df=pd.DataFrame()
+    df['Vol']=sigma
+    df['T']=maturity
+    df['K']=strike
+    df['Call']=call
+
+    df.to_csv('x.csv')
